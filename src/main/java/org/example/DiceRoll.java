@@ -7,7 +7,12 @@ public class DiceRoll {
         int max = 6;
         int min = 1;
         int range = max - min + 1;
-        int roll = (int) (Math.random() * range) + min;
-            System.out.println(roll);
-        }
+        // Roll dice
+        int roll1 = (int) (Math.random() * range) + min;
+        System.out.println(roll1);
+
+
+
+
     }
+}
