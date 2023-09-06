@@ -10,14 +10,20 @@ public class DiceRoll {
 
         while (shouldRepeat) {
             drawDice();
-            System.out.println("Would you like to roll the dice? ");
-            String UserResponse = getInput.nextLine();
+            System.out.println("Welcome to Dice Roller! Would you like to give it a spin? ");
+            String userResponse = getInput.nextLine();
 
-            if (UserResponse.equalsIgnoreCase("yes") || UserResponse.equalsIgnoreCase("y")) {
+            if (userResponse.equalsIgnoreCase("yes") || userResponse.equalsIgnoreCase("y")) {
                 shouldRepeat = false;
                 rollDice();
+                System.out.println("Would you like to roll again? ");
+                userResponse = getInput.nextLine();
+                if (userResponse.equalsIgnoreCase("yes") || userResponse.equalsIgnoreCase("y")) {
+                    rollDice();
+                    shouldRepeat = true;
+                }
             }
-            else if (UserResponse.equalsIgnoreCase("no") || UserResponse.equalsIgnoreCase("n")) {
+            else if (userResponse.equalsIgnoreCase("no") || userResponse.equalsIgnoreCase("n")) {
                 System.out.println("Ok... see you next time! ");
                 shouldRepeat = false;
             }
