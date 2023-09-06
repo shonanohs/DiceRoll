@@ -19,7 +19,6 @@ public class DiceRoll {
                 System.out.println("Would you like to roll again? ");
                 userResponse = getInput.nextLine();
                 if (userResponse.equalsIgnoreCase("yes") || userResponse.equalsIgnoreCase("y")) {
-                    rollDice();
                     shouldRepeat = true;
                 }
             }
