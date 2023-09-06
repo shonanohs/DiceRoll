@@ -49,6 +49,9 @@ public class DiceRoll {
         while (roll1 != roll2) {
             roll2 = (int) (Math.random() * range) + min;
             if (roll1 == roll2) {
+                if (count == 0) {
+                    count++;
+                }
                 break;
             }
             System.out.println("Roll " + (count + 1) + ": " + roll2);
@@ -59,7 +62,7 @@ public class DiceRoll {
 
         // Print out the number of rolls required to match initial roll
         System.out.println("Final roll: " + roll2);
-        System.out.println("You did it, well done! It took " + count + " rolls.");
+        System.out.println("You did it, well done! It took " + count + " roll(s).");
     }
     private static void drawDice() {
         System.out.println("       .-------.    ______\n" +
