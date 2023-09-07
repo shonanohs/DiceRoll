@@ -4,8 +4,7 @@ import java.util.Scanner;
 
 public class DiceRoll {
     public static void main(String[] args) {
-        Boolean shouldRepeat = true;
-
+        boolean shouldRepeat = true;
         Scanner getInput = new Scanner(System.in);
 
         while (shouldRepeat) {
@@ -15,7 +14,10 @@ public class DiceRoll {
 
             if (userResponse.equalsIgnoreCase("yes") || userResponse.equalsIgnoreCase("y")) {
                 shouldRepeat = false;
-                rollDice();
+                int point = calculateInitialScore();
+                if (point != 0) {
+                    calculateSubsequentScore(point);
+                }
                 System.out.println("Would you like to roll again? ");
                 userResponse = getInput.nextLine();
                 if (userResponse.equalsIgnoreCase("yes") || userResponse.equalsIgnoreCase("y")) {
@@ -35,45 +37,72 @@ public class DiceRoll {
         }
     }
 
-    private static void rollDice() {
-        Scanner getInput = new Scanner(System.in);
 
+    private static int rollDice() {
         // Set min and max values for roll
         int max = 6;
         int min = 1;
         int range = max - min + 1;
         // Generate number at random between min and max numbers inclusive
-        int roll1 = (int) (Math.random() * range) + min;
-        System.out.println("Let's go! Press enter to roll the dice.");
-        getInput.nextLine();
-        System.out.println("Your initial roll is " + roll1 + ". Now let's see how many rolls it takes " +
-                "you to match it!"); // Print out initial roll
-        getInput.nextLine();
-
-        // Keep rolling dice while the rolls do not match the initial roll
-        int count = 0;
-        int roll2 = 0;
-        while (roll1 != roll2) {
-            count++;
-            roll2 = (int) (Math.random() * range) + min;
-            System.out.println("Roll " + (count) + ": " + roll2);
-            if (roll1 == roll2) {
-                // Print out the number of rolls required to match initial roll
-                System.out.println("\nYou did it, well done! It took " + count + " roll(s).\n");
-                break;
-            }
-            System.out.println("Try again!");
-            getInput.nextLine();
-        }
+        int roll = (int) (Math.random() * range) + min;
+        System.out.println("You rolled a " + roll);
+        return roll;
     }
 
+    private static int calculateInitialScore() {
+        Scanner getInput = new Scanner(System.in);
+        System.out.println("Let's go! Press enter to roll the dice.");
+        getInput.nextLine();
+        int roll1 = rollDice();
+        System.out.println("Now roll the second dice... ");
+        getInput.nextLine();
+        int roll2 = rollDice();
+        int point = roll1 + roll2;
+
+        switch (point) {
+            case 7, 11 -> {
+                System.out.println("Congratulations you win! ");
+                point = 0;
+            }
+            case 2, 3, 12 -> {
+                System.out.println("Sorry, you lose... Try again!");
+                point = 0;
+            }
+            default -> {System.out.println("Your point is: " + point + ". Keep rolling! ");}
+        }
+        return point;
+    }
+
+    private static void calculateSubsequentScore(int point) {
+        Scanner getInput = new Scanner(System.in);
+        System.out.println("Let's roll again...");
+        getInput.nextLine();
+        int roll1 = rollDice();
+        System.out.println("And again... ");
+        getInput.nextLine();
+        int roll2 = rollDice();
+        int sum = roll1 + roll2;
+
+        if (sum == 7) {
+            System.out.println("Sorry, you lose!");
+        }
+        else if (sum == point) {
+            System.out.println("Congratulations, you win - you matched your point!");
+        }
+        else {
+                System.out.println("You rolled a " + sum + ". Not a match - keep rolling!");
+                calculateSubsequentScore(point);
+            }
+        }
+
     private static void drawDice() {
-        System.out.println("       .-------.    ______\n" +
-                "      /   o   /|   /\\     \\\n" +
-                "     /_______/o|  /o \\  o  \\\n" +
-                "     | o     | | /   o\\_____\\\n" +
-                "     |   o   |o/ \\o   /o    /\n" +
-                "     |     o |/   \\ o/  o  /\n" +
-                "     '-------'     \\/____o/");
+        System.out.println("""
+                  .-------.    ______
+                 /   o   /|   /\\     \\
+                /_______/o|  /o \\  o  \\
+                | o     | | /   o\\_____\\
+                |   o   |o/ \\o   /o    /
+                |     o |/   \\ o/  o  /
+                '-------'     \\/____o/""".indent(5));
     }
 }
